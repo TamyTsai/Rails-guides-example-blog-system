@@ -1,0 +1,22 @@
+<h1>文章列表</h1>
+
+<ul>
+  <% @articles.each do |article| %>
+    <li>
+      <%= article.title %>
+    </li>
+  <% end %>
+</ul>
+
+<!-- 上面的程式碼是 HTML 和 ERB 的混合。ERB 是評估嵌入在文件中的 Ruby 程式碼的範本系統。在此，我們可以看到兩種 ERB 標籤：<% %> 和 <%= %>。<% %> 標籤表示「評估封閉的 Ruby 程式碼」。<%= %> 標籤表示「評估封閉的 Ruby 程式碼，並輸出它傳回的值」。任何您可以在一般 Ruby 程式中撰寫的內容都可以放入這些 ERB 標籤中，儘管通常最好讓 ERB 標籤的內容簡短，以提高可讀性。
+由於我們不想要輸出 @articles.each 傳回的值，因此我們將該程式碼封閉在 <% %> 中。但是，由於我們確實想要輸出 article.title（對於每篇文章）傳回的值，因此我們將該程式碼封閉在 <%= %> 中。 -->
+
+<!-- 我們可以透過造訪 http://localhost:3000 來看到最終結果。（請記住，bin/rails server 必須正在執行！）以下是在我們執行此操作時會發生的事情
+
+瀏覽器提出要求：GET http://localhost:3000。
+我們的 Rails 應用程式收到此要求。
+Rails 路由器 將 根路由 對應到 ArticlesController 的 index 動作。
+index 動作使用 Article 模型 來擷取 資料庫中 的 所有文章。
+Rails 自動呈現 app/views/articles/index.html.erb 檢視。
+檢視中的 ERB 程式碼會經過評估以輸出 HTML。
+伺服器傳送包含 HTML 的回應回瀏覽器。 -->
