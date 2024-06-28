@@ -1,0 +1,46 @@
+<!-- 我們會使用 Rails 的一個名為表單產生器的功能來建立我們的表單。使用表單產生器，我們可以撰寫最少量的程式碼來輸出一個完全設定且遵循 Rails 約定的表單。 -->
+
+<h1>建立文章</h1>
+
+<%= form_with model: @article do |form| %>
+<!-- form_with 輔助方法會建立一個 表單產生器。在 form_with 區塊中，我們會呼叫 表單產生器上的 方法，例如 label 和 text_field，以輸出適當的表單元素。 -->
+    <div>
+        <%= form.label :title, '文章標題'%><br>
+        <%= form.text_field :title %>
+        <!-- <input type="text" name="article[title]" id="article_title" /> -->
+        <!-- 在我們的 驗證 就緒後，讓我們修改 app/views/articles/new.html.erb 以顯示 title 和 body 的任何錯誤訊息 -->
+        <% @article.errors.full_messages_for(:title).each do |message| %>
+        <!-- full_messages_for 方法 會傳回 指定屬性 的 使用者 友善錯誤 訊息 陣列。如果該屬性沒有錯誤，陣列 將會是 空的。 -->
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :body, '文章內文'%><br>
+        <%= form.text_area :body %>
+        <% @article.errors.full_messages_for(:body).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>
+
+<!-- 
+<form action="/articles" accept-charset="UTF-8" method="post">
+    <input type="hidden" name="authenticity_token" value="dzxT9dHpRPWoqSJnILLj94O3-olxNKlhNDApAabmerFRfNNX7WKW6DNq-6PC1Itox4CUYyYSpUg2rGt96CXVwg" autocomplete="off" />
+    <div>
+        <label for="article_title">文章標題</label><br>
+        <input type="text" name="article[title]" id="article_title" />
+    </div>
+
+    <div>
+        <label for="article_body">文章內文</label><br>
+        <textarea name="article[body]" id="article_body">
+</textarea>
+    </div>
+    <div>
+        <input type="submit" name="commit" value="Create Article" data-disable-with="Create Article" />
+    </div>
+</form> -->
