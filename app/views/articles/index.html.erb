@@ -3,10 +3,18 @@
 <ul>
   <% @articles.each do |article| %>
     <li>
-      <!-- <%= link_to article.title, articles_path(article) %> -->
-      <a href="/articles/<%= article.id %>">
+      
+      <!-- <a href="/articles/<%= article.id %>">
         <%= article.title %>
-      </a>
+      </a> -->
+      <!-- <a href="<%= article_path(article) %>">
+        <%= article.title %>
+      </a> -->
+      <!-- 不過，我們會進一步使用 link_to 輔助工具。link_to 輔助工具 會呈現 一個連結，其第一個引數為 連結文字，第二個引數為 連結目的地。
+        如果我們將 模型物件（article.title） 傳遞為第二個引數，link_to 會呼叫 適當的 路徑輔助工具，將 物件 轉換為 路徑。
+        例如，如果我們傳遞一篇文章，link_to 會呼叫 article_path。-->
+        <%= link_to article.title, article %>
+        <!-- <%= link_to article.title, article_path(article) %> -->
     </li>
   <% end %>
 </ul>
