@@ -3,4 +3,9 @@
 
 <ul>
     <li><%= link_to "編輯文章", edit_article_path(@article) %></li>
+    <li><%= link_to "刪除文章", article_path(@article), data: {turbo_method: :delete, turbo_confirm: "確定刪除此文章？"} %></li>
+    <!-- 在上述程式碼中，我們使用 data 選項 來設定「刪除」連結的 data-turbo-method 和 data-turbo-confirm HTML 屬性。
+        這兩個屬性都會連結到 Turbo，它預設包含在新的 Rails 應用程式中。
+        data-turbo-method="delete" 會讓 連結 發出 DELETE 要求，而不是 GET 要求。
+        data-turbo-confirm="確定刪除此文章？" 會在連結被按一下時顯示 確認對話框。如果使用者取消對話框，要求將會中止。 -->
 </ul>

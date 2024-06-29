@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    # show 動作呼叫 Article.find（先前提到過），其中包含路由參數擷取的 ID。傳回的文章儲存在 @article 執行實體變數中，因此view可以存取它。
+    # show 動作呼叫 Article.find（先前提到過），其中包含 路由參數 擷取的 ID。傳回的文章儲存在 @article 執行實體變數中，因此view可以存取它。
     # 預設情況下，show 動作會呈現 app/views/articles/show.html.erb。
     @article = Article.find(params[:id])
     # 新的路由是另一個 get 路由，但它的路徑中有些額外的東西：:id。這指定一個路由參數。
@@ -72,6 +72,17 @@ class ArticlesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity # 否則，動作會重新顯示表單（包含錯誤訊息），方法是呈現 app/views/articles/edit.html.erb。
     end
+  end
+
+  # 最後，我們來到了 CRUD 的「D」（刪除）。刪除資源是一個比建立或更新更簡單的流程。
+  # 它只需要一個路由和一個控制器動作。我們的有用的路由 (resources :articles) 已經提供了路由，它會將 DELETE /articles/:id 要求對應到 ArticlesController 的 destroy 動作。
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
+    # destroy 動作會從資料庫中擷取文章，並呼叫 destroy。然後，它會將瀏覽器重新導向到 根路徑，狀態碼為 303 另尋他處。
+    # 我們選擇重新導向到 根路徑，因為那是我們 文章的主要存取點。但在其他情況下，你可能會選擇重新導向到例如 articles_path。
   end
 
   private
