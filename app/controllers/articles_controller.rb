@@ -89,7 +89,7 @@ class ArticlesController < ApplicationController
 
   private
     def article_params # 資料清洗後的Hash
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :status)
     end
 
     def find_story

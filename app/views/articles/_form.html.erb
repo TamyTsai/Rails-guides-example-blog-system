@@ -25,6 +25,14 @@
             <div><%= message %></div>
         <% end %>
     </div>
+    <!-- 最後，我們會在表單中新增一個 選取方塊，並讓使用者在 建立新文章 或 發布新留言時 選擇狀態。
+        我們也可以選擇 物件的狀態，或者如果尚未設定，則預設為 public。 -->
+    <div>
+        <%= form.label :status, '文章狀態' %><br>
+        <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public' %>
+        <!-- Visible::VALID_STATUSES 模組名稱::模組中的可見狀態陣列 -->
+        <!-- 下拉式選單，選單內容為 Visible模組中的可見狀態陣列 中的元素，選擇的選項送出後要寫到 articles資料表中的status欄位，沒選的話預設為'public'-->
+    </div>
     <div>
         <%= form.submit %>
     </div>

@@ -1,8 +1,12 @@
-<p>
-    <strong>留言者：</strong>
-    <%= comment.commenter %>
-</p>
-<p>
-    <strong>留言：</strong>
-    <%= comment.body %>
-</p>
+<% unless comment.archived? %>
+<!-- 類似地，在我們的留言部分檢視（app/views/comments/_comment.html.erb）中，我們將使用 archived? 方法來 避免 顯示任何 已封存 的留言 -->
+<!-- archived?為定義在comment model的方法，會回傳 留言資料表中status欄位值是否為archived -->
+    <p>
+        <strong>留言者：</strong>
+        <%= comment.commenter %>
+    </p>
+    <p>
+        <strong>留言：</strong>
+        <%= comment.body %>
+    </p>
+<% end %>

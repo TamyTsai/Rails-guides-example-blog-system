@@ -1,21 +1,28 @@
 <h1>文章列表</h1>
 
+<!-- 在檢視中，您可以像呼叫任何類別方法一樣呼叫public_count -->
+我們部落格目前有<%= Article.public_count %>篇文章
+<!-- 於concerns設定類別方法public_count。-->
+
 <ul>
   <% @articles.each do |article| %>
-    <li>
-      
-      <!-- <a href="/articles/<%= article.id %>">
-        <%= article.title %>
-      </a> -->
-      <!-- <a href="<%= article_path(article) %>">
-        <%= article.title %>
-      </a> -->
-      <!-- 不過，我們會進一步使用 link_to 輔助工具。link_to 輔助工具 會呈現 一個連結，其第一個引數為 連結文字，第二個引數為 連結目的地。
-        如果我們將 模型物件（article.title） 傳遞為第二個引數，link_to 會呼叫 適當的 路徑輔助工具，將 物件 轉換為 路徑。
-        例如，如果我們傳遞一篇文章，link_to 會呼叫 article_path。-->
-        <%= link_to article.title, article %>
-        <!-- <%= link_to article.title, article_path(article) %> -->
-    </li>
+    <!-- 然後，在我們的 index 動作範本（app/views/articles/index.html.erb）中，我們將使用 archived? 方法來 避免顯示任何 已封存 的文章 -->
+    <% unless article.archived? %>
+    <!-- archived?為定義在article model的方法，會回傳 文章資料表中status欄位值是否為archived -->
+      <li>
+        <!-- <a href="/articles/<%= article.id %>">
+          <%= article.title %>
+        </a> -->
+        <!-- <a href="<%= article_path(article) %>">
+          <%= article.title %>
+        </a> -->
+        <!-- 不過，我們會進一步使用 link_to 輔助工具。link_to 輔助工具 會呈現 一個連結，其第一個引數為 連結文字，第二個引數為 連結目的地。
+          如果我們將 模型物件（article.title） 傳遞為第二個引數，link_to 會呼叫 適當的 路徑輔助工具，將 物件 轉換為 路徑。
+          例如，如果我們傳遞一篇文章，link_to 會呼叫 article_path。-->
+          <%= link_to article.title, article %>
+          <!-- <%= link_to article.title, article_path(article) %> -->
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
