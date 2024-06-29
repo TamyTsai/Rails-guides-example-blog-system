@@ -4,9 +4,10 @@
 class Article < ApplicationRecord
     include Visible # 引入concerns模組，就可以用 該模組內 的方法
 
-    has_many :comments
+    has_many :comments, dependent: :destroy
     # 一篇文章 可以有 許多留言。
     # 這個宣告啟用了相當多的自動行為。例如，如果您有一個 包含文章 的 實體變數@article，您可以使用@article.comments將所有 屬於 該文章 的 留言 作為 陣列 擷取。
+    # 刪除 關聯物件：如果您刪除一篇文章，其相關的留言也需要被刪除，否則它們只會佔用資料庫空間。Rails 允許您使用關聯的 dependent 選項來達成此目的。
 
     # 正如我們所見，建立 資源 是一個多步驟的程序。處理 無效的 使用者輸入 是該程序的另一個步驟。
     # Rails 提供了一項稱為 驗證 的功能，以協助我們處理無效的使用者輸入。

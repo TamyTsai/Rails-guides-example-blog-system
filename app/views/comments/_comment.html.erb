@@ -9,4 +9,14 @@
         <strong>留言：</strong>
         <%= comment.body %>
     </p>
+
+    <p>
+        <!-- <%= link_to "刪除留言", article_path(@article), data: {turbo_method: :delete, turbo_confirm: "確定刪除此文章？"} %> -->
+        <%= link_to "刪除留言", [comment.article, comment], 
+        data: {
+            turbo_method: :delete, 
+            turbo_confirm: "確定刪除此留言？"
+        } %>
+        <!-- 按一下這個新的「刪除留言」連結會觸發 DELETE /articles/:article_id/comments/:id 至我們的 CommentsController，然後它可以使用這個連結來尋找我們要刪除的留言 -->
+    </p>
 <% end %>

@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   # 幾乎所有網路應用程式都涉及 CRUD（建立、讀取、更新和刪除） 作業。您甚至可能會發現您的應用程式所做的工作大部分都是 CRUD。
   # Rails 承認這一點，並提供了許多功能來協助簡化執行 CRUD 的程式碼。
 
-  before_action :find_story, only: [:edit, :update, :destroy]
+  before_action :find_article, only: [:edit, :update, :destroy]
 
   def index
     @articles = Article.all
@@ -92,7 +92,7 @@ class ArticlesController < ApplicationController
       params.require(:article).permit(:title, :body, :status)
     end
 
-    def find_story
+    def find_article
       @article = Article.find(params[:id])
     end
 
