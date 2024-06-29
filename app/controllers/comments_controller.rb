@@ -11,6 +11,10 @@
 
 class CommentsController < ApplicationController
 
+    # 我們也希望只允許經過驗證的使用者 刪除 留言，所以在 CommentsController (app/controllers/comments_controller.rb) 中我們寫下
+    http_basic_authenticate_with name: "dhh", password: "secret", only: :destroy
+
+
     before_action :find_article
     
     def create

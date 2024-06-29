@@ -7,6 +7,18 @@ class ArticlesController < ApplicationController
   # 幾乎所有網路應用程式都涉及 CRUD（建立、讀取、更新和刪除） 作業。您甚至可能會發現您的應用程式所做的工作大部分都是 CRUD。
   # Rails 承認這一點，並提供了許多功能來協助簡化執行 CRUD 的程式碼。
 
+  # 如果您在線上發布您的部落格，任何人都可以 新增、編輯和刪除文章或刪除留言。
+  # Rails 提供了一個 HTTP 驗證系統，在這種情況下會很好用。
+  # 在 ArticlesController 中，我們需要 有方法來 封鎖 對 各種動作的存取，如果 使用者 未驗證。
+  # 這裡我們可以使用 Rails 的 http_basic_authenticate_with 方法，如果該方法 允許，則允許 存取 要求的動作。
+  # 若要使用 驗證系統，我們在 app/controllers/articles_controller.rb 中的 ArticlesController 頂端指定它。在我們的案例中，我們希望使用者在每個動作上都經過驗證，除了 index 和 show，所以我們寫下
+  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+  # 除了 文章列表 與 單一文章頁面 外，都要進行驗證
+  # 現在如果您嘗試建立一篇文章，您會收到一個基本的 HTTP 驗證挑戰
+  # 在輸入正確的 使用者名稱 和 密碼 後，您會保持 驗證狀態，直到需要 不同的使用者名稱 和 密碼 或 瀏覽器關閉。
+  # Rails 應用程式還有其他驗證方法可用。兩個 Rails 的熱門驗證附加元件是 Devise rails 引擎和 Authlogic gem，以及許多其他元件。
+  # 安全性，特別是在 Web 應用程式中，是一個廣泛且詳細的領域。Rails 應用程式的安全性在 Ruby on Rails 安全性指南 中有更深入的說明。
+
   before_action :find_article, only: [:edit, :update, :destroy]
 
   def index
