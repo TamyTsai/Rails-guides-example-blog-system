@@ -7,6 +7,8 @@ class ArticlesController < ApplicationController
   # 幾乎所有網路應用程式都涉及 CRUD（建立、讀取、更新和刪除） 作業。您甚至可能會發現您的應用程式所做的工作大部分都是 CRUD。
   # Rails 承認這一點，並提供了許多功能來協助簡化執行 CRUD 的程式碼。
 
+  before_action :find_story, only: [:edit, :update, :destroy]
+
   def index
     @articles = Article.all
   end
@@ -58,13 +60,13 @@ class ArticlesController < ApplicationController
   # 我們已經介紹了 CRUD 中的「C」和「R」。現在讓我們繼續「U」（更新）。更新資源與建立資源非常類似。它們都是多步驟的程序。
   # 首先，使用者要求一個表單來 編輯資料。然後，使用者 提交表單。如果沒有錯誤，則資源會被更新。否則，表單會 重新顯示 錯誤訊息，並且程序 會重複。
   def edit
-    @article = Article.find(params[:id])
+    # @article = Article.find(params[:id])
     # edit 動作從資料庫中擷取文章，並將其儲存在 @article 中，以便在 建立表單 時 使用。
     # 預設情況下，edit 動作會呈現 app/views/articles/edit.html.erb。
   end
 
   def update
-    @article = Article.find(params[:id])
+    # @article = Article.find(params[:id])
     # update 動作（重新）從 資料庫中 擷取文章，並嘗試使用 article_params 過濾的 已提交 表單資料 來 更新它。
 
     if @article.update(article_params) # 如果沒有 驗證失敗 且 更新成功
@@ -77,7 +79,7 @@ class ArticlesController < ApplicationController
   # 最後，我們來到了 CRUD 的「D」（刪除）。刪除資源是一個比建立或更新更簡單的流程。
   # 它只需要一個路由和一個控制器動作。我們的有用的路由 (resources :articles) 已經提供了路由，它會將 DELETE /articles/:id 要求對應到 ArticlesController 的 destroy 動作。
   def destroy
-    @article = Article.find(params[:id])
+    # @article = Article.find(params[:id])
     @article.destroy
 
     redirect_to root_path, status: :see_other
@@ -88,6 +90,10 @@ class ArticlesController < ApplicationController
   private
     def article_params # 資料清洗後的Hash
       params.require(:article).permit(:title, :body)
+    end
+
+    def find_story
+      @article = Article.find(params[:id])
     end
 
 end
