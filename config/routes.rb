@@ -20,7 +20,10 @@ Rails.application.routes.draw do
   # 每當我們有路由、控制器動作 和 檢視 的組合，共同 對 實體 執行 CRUD 操作時，我們稱該實體為 資源。例如，在我們的應用程式中，我們會說 一篇文章 是一個資源。
 
   # Rails 提供了一個名為 resources 的路由方法，可對資源集合（例如文章）的所有 慣例路由 進行對應。
-  resources :articles
+  resources :articles do
+    resources :comments
+    # 這會在 articles 中建立 comments 作為一個 巢狀資源。這是 捕捉 文章 與 評論 之間 階層關係 的 另一部分。
+  end
   # articles     GET    /articles(.:format)                     articles#index 顯示 所有文章的清單
   #              POST   /articles(.:format)                     articles#create 建立新文章
   # new_article  GET    /articles/new(.:format)                 articles#new 傳回用於 建立 新文章 的 HTML 表單

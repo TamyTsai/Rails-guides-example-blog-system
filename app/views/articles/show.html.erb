@@ -9,3 +9,34 @@
         data-turbo-method="delete" 會讓 連結 發出 DELETE 要求，而不是 GET 要求。
         data-turbo-confirm="確定刪除此文章？" 會在連結被按一下時顯示 確認對話框。如果使用者取消對話框，要求將會中止。 -->
 </ul>
+
+<h2>留言</h2>
+<% @article.comments.each do |comment| %>
+    <p>
+        <strong>留言者：</strong>
+        <%= comment.commenter %>
+    </p>
+    <p>
+        <strong>留言：</strong>
+        <%= comment.body %>
+    </p>
+<% end %>
+
+<h2>新增留言：</h2>
+<%= form_with model: [ @article, @article.comments.build ] do |form|%>
+<!-- comments實體方法是由model設定has_many :comments長出來的 -->
+<!-- build後還要save才會寫進資料庫 -->
+    <p>
+        <%= form.label :commenter, '留言者' %><br>
+        <%= form.text_field :commenter %>
+    </p>
+    <p>
+        <%= form.label :body, '留言' %><br>
+        <%= form.text_area :body %>
+    </p>
+    <p>
+        <%= form.submit %>
+    </p>
+<% end %>
+<!-- 這會在 Article 顯示頁面上 新增一個表單，透過呼叫 CommentsController 的 create 動作來建立新的留言。
+    此處的 form_with 呼叫 使用 陣列，這會建立 巢狀路由，例如 /articles/1/comments。 -->
