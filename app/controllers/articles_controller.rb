@@ -54,6 +54,26 @@ class ArticlesController < ApplicationController
   # 當我們 拜訪 http://localhost:3000/articles/new 時，GET /articles/new 要求會對應到 new 動作。new 動作 不會 嘗試儲存 @article。因此，不會檢查 驗證，而且不會有 錯誤訊息。
   # 當我們 提交 表單時，POST /articles 請求會對應到 create 動作。create 動作會嘗試儲存 @article。因此，會 檢查 驗證。如果任何 驗證失敗，@article 將不會被儲存，並且 app/views/articles/new.html.erb 會以錯誤訊息呈現。
 
+
+  # 我們已經介紹了 CRUD 中的「C」和「R」。現在讓我們繼續「U」（更新）。更新資源與建立資源非常類似。它們都是多步驟的程序。
+  # 首先，使用者要求一個表單來 編輯資料。然後，使用者 提交表單。如果沒有錯誤，則資源會被更新。否則，表單會 重新顯示 錯誤訊息，並且程序 會重複。
+  def edit
+    @article = Article.find(params[:id])
+    # edit 動作從資料庫中擷取文章，並將其儲存在 @article 中，以便在 建立表單 時 使用。
+    # 預設情況下，edit 動作會呈現 app/views/articles/edit.html.erb。
+  end
+
+  def update
+    @article = Article.find(params[:id])
+    # update 動作（重新）從 資料庫中 擷取文章，並嘗試使用 article_params 過濾的 已提交 表單資料 來 更新它。
+
+    if @article.update(article_params) # 如果沒有 驗證失敗 且 更新成功
+      redirect_to @article  # 動作會將瀏覽器重新導向到文章的頁面。
+    else
+      render :edit, status: :unprocessable_entity # 否則，動作會重新顯示表單（包含錯誤訊息），方法是呈現 app/views/articles/edit.html.erb。
+    end
+  end
+
   private
     def article_params # 資料清洗後的Hash
       params.require(:article).permit(:title, :body)

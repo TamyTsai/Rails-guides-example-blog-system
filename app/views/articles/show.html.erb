@@ -1,2 +1,6 @@
 <h1><%= @article.title %></h1>
 <p><%= @article.body %></p>
+
+<ul>
+    <li><%= link_to "編輯文章", edit_article_path(@article) %></li>
+</ul>
